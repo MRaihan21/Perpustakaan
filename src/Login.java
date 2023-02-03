@@ -1,35 +1,23 @@
 package Perpustakaan;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 class Login extends JFrame implements ActionListener {           
 
     ImageIcon image;
-    JLabel judul;
-
-    JLabel username;
-    JTextField textUsername;
-    JLabel password;
-    JPasswordField textPassword;
+    JLabel judul, username, password;   
+    JTextField textUsername, textPassword;    
     JButton button;
 
     Login() {
 
         //frame
-        this.setTitle("Aplikasi Perpustakaan");
+        this.setTitle("Login");
         this.setSize(400, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //image
@@ -40,29 +28,30 @@ class Login extends JFrame implements ActionListener {
         judul = new JLabel();
         judul.setText("Aplikasi Perpustakaan");
         judul.setIcon(image);
+        
         judul.setForeground(Color.white);
         judul.setHorizontalTextPosition(JLabel.CENTER);
         judul.setVerticalTextPosition(JLabel.BOTTOM);
         judul.setHorizontalAlignment(JLabel.CENTER);
-        judul.setVerticalAlignment(JLabel.CENTER);
+        judul.setVerticalAlignment(JLabel.CENTER);               
 
         //username
         username = new JLabel();
         username.setText("Username");
         username.setBounds(130, 320, 90, 20);
-        this.add(username);
         username.setForeground(Color.gray);
+        this.add(username);        
 
         textUsername = new JTextField();
         textUsername.setBounds(115, 320, 160, 20);
         this.add(textUsername);
 
-        //pssword
+        //password
         password = new JLabel();
         password.setText("Password");
         password.setBounds(130, 350, 90, 20);
-        this.add(password);
         password.setForeground(Color.gray);
+        this.add(password);        
 
         textPassword = new JPasswordField();
         textPassword.setBounds(115, 350, 160, 20);
@@ -78,8 +67,8 @@ class Login extends JFrame implements ActionListener {
         button.setBackground(Color.white);
         this.add(button);
 
-        this.getContentPane().setBackground(Color.ORANGE);
         this.add(judul);
+        this.getContentPane().setBackground(Color.ORANGE);        
 
         //       
         this.setResizable(false);
