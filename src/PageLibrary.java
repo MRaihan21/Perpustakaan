@@ -231,7 +231,13 @@ public class PageLibrary extends JFrame implements ActionListener {
         String data = e.getActionCommand();
         switch (data) {
             case "Simpan":
-                JOptionPane.showMessageDialog(null, "Data Tersimpan");
+                if (textNama.getText().isEmpty() || textAlamat.getText().isEmpty()
+                        || !group.isSelected(pn.getModel()))
+                {                                   
+                    JOptionPane.showMessageDialog(null, "Isi Semua Data", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Data Tersimpan");
+                }
                 break;
             case "Reset":
                 if (e.getSource() == ButtonRst) {
