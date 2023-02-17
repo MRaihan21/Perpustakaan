@@ -42,6 +42,7 @@ public class PageLibrary extends JFrame implements ActionListener {
 
         textNama = new JTextField();
         textNama.setBounds(306, 166, 410, 30);
+        textNama.grabFocus();
         this.add(textNama);
 
         pekerjaan = new JLabel();
@@ -198,6 +199,7 @@ public class PageLibrary extends JFrame implements ActionListener {
 
         textAlamat = new JTextArea();
         textAlamat.setBounds(306, 524, 410, 70);
+        textAlamat.grabFocus();
         this.add(textAlamat);
 
         buttonSmpn = new JButton("Simpan");
@@ -231,9 +233,7 @@ public class PageLibrary extends JFrame implements ActionListener {
         String data = e.getActionCommand();
         switch (data) {
             case "Simpan":
-                if (textNama.getText().isEmpty() || textAlamat.getText().isEmpty()
-                        || !group.isSelected(pn.getModel()))
-                {                                   
+                if (textNama.getText().isEmpty() || textAlamat.getText().isEmpty() || group.getSelection() == null || group2.getSelection() == null || group3.getSelection() == null) {
                     JOptionPane.showMessageDialog(null, "Isi Semua Data", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(null, "Data Tersimpan");
