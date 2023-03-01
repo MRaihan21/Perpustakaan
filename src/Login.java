@@ -6,11 +6,8 @@ import javax.swing.*;
 import java.sql.*;
 
 class Login extends JFrame implements ActionListener {
-
-    Connection con;
-    Statement stmt;
-    ResultSet rs;
-    DBconnect koneksi;
+    
+    Connection con = null; 
 
     ImageIcon image;
     JLabel judul, username, password, register;
@@ -69,40 +66,39 @@ class Login extends JFrame implements ActionListener {
         button.setFocusable(false);
         button.setBackground(Color.white);
         button.setBounds(150, 380, 80, 20);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dblogin", "root", "");
-                    Statement stm = con.createStatement();
-
-                    String username = textUsername.getText();
-                    String password = textPassword.getText();
-                    String sql = "SELECT * FROM tblogin WHERE username='"
-                            + username + "' AND password='" + password + "'";
-                    ResultSet rs = stm.executeQuery(sql);
-
-                    if (username.equals("") && password.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Isi Username dan Password", "Message", JOptionPane.ERROR_MESSAGE);
-                    } else if (password.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Isi Password", "Message", JOptionPane.ERROR_MESSAGE);
-                    } else if (username.equals("")) {
-                        JOptionPane.showMessageDialog(null, "Isi Username", "Message", JOptionPane.ERROR_MESSAGE);
-                    } else if (rs.next()) {
-                        JOptionPane.showMessageDialog(null, "Selamat Datang " + username);
-                        dispose();
-                        PageLibrary pagelibrary = new PageLibrary();
-                        pagelibrary.setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Username & Password Salah", "Message", JOptionPane.ERROR_MESSAGE);
-                    }
-
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+        //lambda
+        button.addActionListener((ActionEvent e) -> {
+            
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_perpustakaan", "root", "");
+                
+                Statement stm = con.createStatement();
+                
+                String username1 = textUsername.getText();
+                String password1 = textPassword.getText();
+                String sql = "SELECT * FROM tabel_login WHERE username='" + username1 + "' AND password='" + password1 + "'";
+                
+                ResultSet rs = stm.executeQuery(sql);
+                
+                if (username1.equals("") && password1.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Isi Username dan Password", "Message", JOptionPane.ERROR_MESSAGE);
+                } else if (password1.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Isi Password", "Message", JOptionPane.ERROR_MESSAGE);
+                } else if (username1.equals("")) {
+                    JOptionPane.showMessageDialog(null, "Isi Username", "Message", JOptionPane.ERROR_MESSAGE);
+                } else if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Selamat Datang " + username1);
+                    dispose();
+                    PageLibrary pagelibrary = new PageLibrary();
+                    pagelibrary.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Username & Password Salah", "Message", JOptionPane.ERROR_MESSAGE);
                 }
-
+                //catch sql
+            }catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Aktifkan Service MySQL Menggunakan XAMPP", "", JOptionPane.WARNING_MESSAGE);
+                System.out.println(ex.getMessage());
             }
         });
         this.add(button);
@@ -130,14 +126,10 @@ class Login extends JFrame implements ActionListener {
         //       
         this.setResizable(false);
         this.setVisible(true);
-
-        con = DBconnect.getConnection();
-
-    }
+    }  
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
     }
-
 }
