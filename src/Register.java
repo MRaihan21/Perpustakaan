@@ -3,16 +3,9 @@ package Perpustakaan;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 class Register extends JFrame implements ActionListener {
-
-    Connection con = null;
-    Statement st = null;
 
     ImageIcon image;
     JLabel judul, username, password, uPassword, nLengkap, register;
@@ -135,7 +128,7 @@ class Register extends JFrame implements ActionListener {
         String name = textNl.getText();
 
         PreparedStatement ps;
-        String sql = "INSERT INTO `tblogin`(`username`, `password`, `nama`) VALUES (?,?,?)";
+        String sql = "INSERT INTO `tabel_login`(`username`, `password`, `fullname`) VALUES (?,?,?)";
 
         try {
             ps = DBconnect.getConnection().prepareStatement(sql);
@@ -159,13 +152,14 @@ class Register extends JFrame implements ActionListener {
             } else if (ps.executeUpdate() > 0) {
                 dispose();
                 new Login().setVisible(true);
-                JOptionPane.showMessageDialog(null, "New User Add");
+                JOptionPane.showMessageDialog(null, "Registrasi Berhasil");
             } else {
                 JOptionPane.showMessageDialog(null, "ERROR");
             }
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Aktifkan Service MySQL Menggunakan XAMPP", "", JOptionPane.WARNING_MESSAGE);
+            System.out.println(ex.getMessage());
         }
     }
 }
