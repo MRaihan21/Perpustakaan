@@ -9,13 +9,12 @@ public class DBconnect {
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/dblogin", "root","");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/database_perpustakaan", "root","");
             
-        } catch(Exception ex) {
-            System.out.println(ex.getMessage());
+        } catch(ClassNotFoundException | SQLException e) {
+            System.out.println(e.getMessage());
         }
         return con;
     }
     
 }
-
