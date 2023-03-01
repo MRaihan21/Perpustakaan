@@ -3,6 +3,7 @@ package Perpustakaan;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 
 public class PageLibrary extends JFrame implements ActionListener {
 
@@ -233,11 +234,77 @@ public class PageLibrary extends JFrame implements ActionListener {
         String data = e.getActionCommand();
         switch (data) {
             case "Simpan":
-                if (textNama.getText().isEmpty() || textAlamat.getText().isEmpty() || group.getSelection() == null || group2.getSelection() == null || group3.getSelection() == null) {
-                    JOptionPane.showMessageDialog(null, "Isi Semua Data", "Error", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Data Tersimpan");
+
+                String name = textNama.getText();
+                String work = "";
+                if (pn.isSelected()) {
+                    work = "Pegawai Negeri";
+                } else if (ps.isSelected()) {
+                    work = "Pegawai Swasta";
+                } else if (tnp.isSelected()) {
+                    work = "TNI / POLRI";
+                } else if (pljr.isSelected()) {
+                    work = "Pelajar";
+                } else if (mhs.isSelected()) {
+                    work = "Mahasiswa";
+                } else if (lny.isSelected()) {
+                    work = "Lainnya";
                 }
+
+                String lD = "";
+                if (sd.isSelected()) {
+                    lD = "SD";
+                } else if (smp.isSelected()) {
+                    lD = "SMP";
+                } else if (sma.isSelected()) {
+                    lD = "SMA";
+                } else if (d1.isSelected()) {
+                    lD = "D1";
+                } else if (d2.isSelected()) {
+                    lD = "D2";
+                } else if (d3.isSelected()) {
+                    lD = "D3";
+                } else if (s1.isSelected()) {
+                    lD = "S1";
+                } else if (s2.isSelected()) {
+                    lD = "S2";
+                } else if (s3.isSelected()) {
+                    lD = "S3";
+                }
+
+                String Gender = "";
+                if (lk.isSelected()) {
+                    Gender = "Laki-laki";
+                } else if (pr.isSelected()) {
+                    Gender = "Perempuan";
+                }
+
+                String address = alamat.getText();
+
+                Connection con = DBconnect.getConnection();
+                PreparedStatement ps;
+
+                try {
+                    ps = con.prepareStatement("INSERT INTO `tabel_data`(`nama`, `pekerjaan`, `pendidikan_terakhir`, `jenis kelamin`, `alamat`) VALUES (?,?,?,?,?)");
+
+                    ps.setString(1, name);
+                    ps.setString(2, work);
+                    ps.setString(3, lD);
+                    ps.setString(4, Gender);
+                    ps.setString(5, address);
+
+                    if (textNama.getText().isEmpty() || textAlamat.getText().isEmpty() || group.getSelection() == null || group2.getSelection() == null || group3.getSelection() == null) {
+                        JOptionPane.showMessageDialog(null, "Isi Semua Data", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else if (ps.executeUpdate() > 0) {
+                        JOptionPane.showMessageDialog(null, "Data Tersimpan");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ERROR");
+                    }
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
+
                 break;
             case "Reset":
                 if (e.getSource() == ButtonRst) {
